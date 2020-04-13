@@ -21,8 +21,22 @@ export function Home() {
   const updateScoreForPlayer = (score, playerIndex, round) => {
     setPlayers(prev => {
       const player = prev[playerIndex]
-      player.scores[round] = parseInt(score)
-      player.score = player.scores.reduce((a, i) => a + i, 0)
+      player.scores[round] = { score: parseInt(score) }
+      player.score = player.scores.reduce((a, i) => a + i.score, 0)
+      console.log('updated', prev)
+      return [...prev]
+    })
+  }
+
+  const reEditScore = (playerIndex, round) => {
+    console.log('double clicked', playerIndex, round)
+    setPlayers(prev => {
+      const player = prev[playerIndex]
+      player.scores[round] = {
+        ...player.scores[round],
+        editing: !player.scores[round].editing,
+      }
+      player.score = player.scores.reduce((a, i) => a + i.score, 0)
       console.log('updated', prev)
       return [...prev]
     })
@@ -63,11 +77,19 @@ export function Home() {
               {[...new Array(rounds + 1)].map((_, i) => {
                 return (
                   <Cell key={i}>
-                    {player.scores[i] || player.scores[i] === 0 ? (
-                      <p>{player.scores[i]}</p>
+                    {player.scores &&
+                    player.scores[i] &&
+                    !player.scores[i].editing &&
+                    (player.scores[i] || player.scores[i].score === 0) ? (
+                      <p onDoubleClick={() => reEditScore(index, i)}>
+                        {player.scores[i].score}
+                      </p>
                     ) : (
                       <input
                         type="number"
+                        placeholder={
+                          player.scores[i] ? player.scores[i].score : ''
+                        }
                         onBlur={e =>
                           updateScoreForPlayer(e.target.value, index, i)
                         }
