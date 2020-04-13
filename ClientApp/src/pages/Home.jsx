@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { StickyTable, Row, Cell } from 'react-sticky-table'
 
-import fakeData from '../data/fake.json'
 import { names } from '../data/names.json'
 
 import { createPlayer } from '../utils/player.factory'
 
 export function Home() {
-  const [players, setPlayers] = useState(fakeData.players || [])
+  const [players, setPlayers] = useState([])
   const [newPlayer, setNewPlayer] = useState('')
   const [rounds, setRounds] = useState(12)
 
@@ -18,7 +17,15 @@ export function Home() {
     })
   }
 
+  const submitScore = (e, oldScore, index, i) => {
+    console.log(e.key)
+    if (e.key === 'Enter') {
+      updateScoreForPlayer(e.target.value || oldScore, index, i)
+    }
+  }
+
   const updateScoreForPlayer = (score, playerIndex, round) => {
+    console.log({ score, playerIndex, round })
     setPlayers(prev => {
       const player = prev[playerIndex]
       player.scores[round] = { score: parseInt(score) }
@@ -36,8 +43,6 @@ export function Home() {
         ...player.scores[round],
         editing: !player.scores[round].editing,
       }
-      player.score = player.scores.reduce((a, i) => a + i.score, 0)
-      console.log('updated', prev)
       return [...prev]
     })
   }
@@ -89,6 +94,14 @@ export function Home() {
                         type="number"
                         placeholder={
                           player.scores[i] ? player.scores[i].score : ''
+                        }
+                        onKeyDown={e =>
+                          submitScore(
+                            e,
+                            player.scores[i] ? player.scores[i].score : 0,
+                            index,
+                            i
+                          )
                         }
                         onBlur={e =>
                           updateScoreForPlayer(e.target.value, index, i)
