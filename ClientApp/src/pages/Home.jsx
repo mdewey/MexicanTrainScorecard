@@ -109,7 +109,7 @@ export function Home() {
           <button onClick={() => addPlayer(newPlayer)}>add</button>
         </section>
         <section>
-          <h5>Total rounds</h5>
+          <h5>Starting at</h5>
           <input
             type="number"
             onChange={e => setRounds(parseInt(e.target.value))}
@@ -124,66 +124,68 @@ export function Home() {
         </section>
       </header>
       <div style={{ width: '100vw' }}>
-        <StickyTable>
-          <Row>
-            <Cell className="player-header">Player</Cell>
-            {rounds &&
-              [...new Array(rounds + 1)].map((_, i) => {
-                return <Cell key={i}>{rounds - i}</Cell>
-              })}
-          </Row>
-          {players.map((player, index) => (
-            <Row key={index}>
-              <Cell>
-                <div className="player-name"> {player.name}</div>
-                <div
-                  className={
-                    'player-score ' +
-                    (player.score == highScore ? 'high-score' : '') +
-                    (player.score == lowScore ? 'low-score' : '')
-                  }
-                >
-                  <hr /> {player.score}
-                </div>
-              </Cell>
-              {[...new Array(rounds + 1)].map((_, i) => {
-                return (
-                  <Cell key={i}>
-                    {player.scores &&
-                    player.scores[i] &&
-                    !player.scores[i].editing &&
-                    (player.scores[i] || player.scores[i].score === 0) ? (
-                      <p onDoubleClick={() => reEditScore(index, i)}>
-                        {player.scores[i].score}
-                      </p>
-                    ) : (
-                      <input
-                        type="number"
-                        placeholder={
-                          player.scores[i] ? player.scores[i].score : ''
-                        }
-                        onKeyDown={e =>
-                          submitScore(
-                            e,
-                            player.scores[i] ? player.scores[i].score : 0,
-                            index,
-                            i
-                          )
-                        }
-                        onBlur={e =>
-                          updateScoreForPlayer(e.target.value, index, i)
-                        }
-                      />
-                    )}
-                  </Cell>
-                )
-              })}
-              <Cell className="delete-button">
-                <button onClick={() => deletePlayer(index)}>X</button>
-              </Cell>
+        {rounds > -1 && players.length > 0 && (
+          <StickyTable>
+            <Row>
+              <Cell className="player-header">Player</Cell>
+              {rounds &&
+                [...new Array(rounds + 1)].map((_, i) => {
+                  return <Cell key={i}>{rounds - i}</Cell>
+                })}
             </Row>
-          ))}
-        </StickyTable>
+            {players.map((player, index) => (
+              <Row key={index}>
+                <Cell>
+                  <div className="player-name"> {player.name}</div>
+                  <div
+                    className={
+                      'player-score ' +
+                      (player.score == highScore ? 'high-score' : '') +
+                      (player.score == lowScore ? 'low-score' : '')
+                    }
+                  >
+                    <hr /> {player.score}
+                  </div>
+                </Cell>
+                {[...new Array(rounds + 1)].map((_, i) => {
+                  return (
+                    <Cell key={i}>
+                      {player.scores &&
+                      player.scores[i] &&
+                      !player.scores[i].editing &&
+                      (player.scores[i] || player.scores[i].score === 0) ? (
+                        <p onDoubleClick={() => reEditScore(index, i)}>
+                          {player.scores[i].score}
+                        </p>
+                      ) : (
+                        <input
+                          type="number"
+                          placeholder={
+                            player.scores[i] ? player.scores[i].score : ''
+                          }
+                          onKeyDown={e =>
+                            submitScore(
+                              e,
+                              player.scores[i] ? player.scores[i].score : 0,
+                              index,
+                              i
+                            )
+                          }
+                          onBlur={e =>
+                            updateScoreForPlayer(e.target.value, index, i)
+                          }
+                        />
+                      )}
+                    </Cell>
+                  )
+                })}
+                <Cell className="delete-button">
+                  <button onClick={() => deletePlayer(index)}>X</button>
+                </Cell>
+              </Row>
+            ))}
+          </StickyTable>
+        )}
       </div>
     </main>
   )
