@@ -16,7 +16,7 @@ html {
 }
 
 .box-shadow {
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0.25rem 0.75rem rgba(170, 170, 170, 0.623);
 }
 
 .header-font {
@@ -34,14 +34,23 @@ main {
     display: flex;
     justify-content: space-around;
     padding-bottom: 1rem;
+    font-size: 0.9rem;
+    margin: 1rem;
+    section {
+      margin: 0.5rem;
+    }
     button {
       text-transform: uppercase;
     }
   }
   .sticky-table-table {
     width: 100vw;
+    input {
+      width: 5rem;
+    }
   }
   .sticky-table-cell {
+    @extend .box-shadow;
     text-align: center;
     background-color: #35654d;
     color: whitesmoke;
@@ -56,21 +65,24 @@ main {
     min-width: 20vw;
   }
   .sticky-table-cell:first-of-type {
-    background-color: rgb(252, 255, 97);
+    background-color: rgba(249, 251, 113, 0.774);
     color: rgb(8, 8, 8);
     padding: 1rem;
-    min-width: 33vw;
+    min-width: 25vw;
     height: 5rem;
   }
   .player-header {
     text-transform: uppercase;
   }
+  .player-score.low-score {
+    background-color: chartreuse;
+  }
+  .player-score.high-score {
+    background-color: orange;
+  }
 }
 
 @media (max-width: 700px) {
-  * {
-    border: 1px solid pink;
-  }
   main {
     header {
       flex-direction: column-reverse;

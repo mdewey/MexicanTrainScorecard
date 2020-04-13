@@ -47,6 +47,20 @@ export function Home() {
     })
   }
 
+  let lowScore = 100000
+  let highScore = 0
+  for (let index = 0; index < players.length; index++) {
+    const player = players[index]
+    if (player.score < lowScore) {
+      lowScore = player.score
+    }
+    if (player.score > highScore) {
+      highScore = player.score
+    }
+  }
+
+  console.log({ lowScore, highScore })
+
   return (
     <main>
       <header>
@@ -83,7 +97,16 @@ export function Home() {
             <Row key={index}>
               <Cell>
                 <div className="player-name"> {player.name}</div>
-                <div className="player-score"> {player.score}</div>
+                <div
+                  className={
+                    'player-score ' +
+                    (player.score == highScore ? 'high-score' : '') +
+                    (player.score == lowScore ? 'low-score' : '')
+                  }
+                >
+                  {' '}
+                  {player.score}
+                </div>
               </Cell>
               {[...new Array(rounds + 1)].map((_, i) => {
                 return (
