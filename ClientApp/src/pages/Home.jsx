@@ -9,7 +9,7 @@ import { createPlayer } from '../utils/player.factory'
 export function Home() {
   const [players, setPlayers] = useState(fakeData.players || [])
   const [newPlayer, setNewPlayer] = useState('')
-  const [rounds, setRounds] = useState(0)
+  const [rounds, setRounds] = useState(12)
 
   const addPlayer = name => {
     name = name || names[Math.floor(Math.random() * names.length)]
@@ -39,15 +39,20 @@ export function Home() {
         <button onClick={() => addPlayer(newPlayer)}>add player</button>
       </section>
       <section>
-        <button onClick={() => setRounds(rounds + 1)}>add round</button>
+        <input
+          type="number"
+          onChange={e => setRounds(parseInt(e.target.value))}
+          value={rounds}
+        />
       </section>
       <div style={{ width: '100%', height: '400px' }}>
         <StickyTable>
           <Row>
             <Cell>Player</Cell>
-            {[...new Array(rounds)].map((_, i) => {
-              return <Cell key={i}>round {i}</Cell>
-            })}
+            {rounds &&
+              [...new Array(rounds + 1)].map((_, i) => {
+                return <Cell key={i}>{rounds - i}</Cell>
+              })}
           </Row>
           {players.map((player, index) => (
             <Row key={index}>
@@ -55,10 +60,9 @@ export function Home() {
                 <div className="player-name"> {player.name}</div>
                 <div className="player-score"> {player.score}</div>
               </Cell>
-              {[...new Array(rounds)].map((_, i) => {
+              {[...new Array(rounds + 1)].map((_, i) => {
                 return (
                   <Cell key={i}>
-                    s:{' '}
                     {player.scores[i] || player.scores[i] === 0 ? (
                       <p>{player.scores[i]}</p>
                     ) : (
