@@ -49,22 +49,24 @@ export function Home() {
 
   return (
     <div>
-      <section>
-        <input
-          type="text"
-          onChange={e => setNewPlayer(e.target.value)}
-          value={newPlayer}
-        />
-        <button onClick={() => addPlayer(newPlayer)}>add player</button>
-      </section>
-      <section>
-        <input
-          type="number"
-          onChange={e => setRounds(parseInt(e.target.value))}
-          value={rounds}
-        />
-      </section>
-      <div style={{ width: '100%', height: '400px' }}>
+      <header>
+        <section>
+          <input
+            type="text"
+            onChange={e => setNewPlayer(e.target.value)}
+            value={newPlayer}
+          />
+          <button onClick={() => addPlayer(newPlayer)}>add player</button>
+        </section>
+        <section>
+          <input
+            type="number"
+            onChange={e => setRounds(parseInt(e.target.value))}
+            value={rounds}
+          />
+        </section>
+      </header>
+      <div style={{ width: '100%' }}>
         <StickyTable>
           <Row>
             <Cell>Player</Cell>
