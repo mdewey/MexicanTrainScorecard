@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useLocalStorage } from '../hooks/useLocalStorage'
+
 import { StickyTable, Row, Cell } from 'react-sticky-table'
 
 import { names } from '../data/names.json'
@@ -6,15 +8,20 @@ import { names } from '../data/names.json'
 import { createPlayer } from '../utils/player.factory'
 
 export function Home() {
-  const [players, setPlayers] = useState([])
+  const [storage, setStorage] = useLocalStorage('game', [])
+  console.log({ storage })
+  const [players, setPlayers] = useState(storage)
   const [newPlayer, setNewPlayer] = useState('')
   const [rounds, setRounds] = useState(12)
 
   const addPlayer = name => {
     name = name || names[Math.floor(Math.random() * names.length)]
     setPlayers(prev => {
-      return [...prev, createPlayer(name)]
+      const _rv = [...prev, createPlayer(name)]
+      setStorage(_rv)
+      return _rv
     })
+    setNewPlayer('')
   }
 
   const submitScore = (e, oldScore, index, i) => {
@@ -31,6 +38,7 @@ export function Home() {
       player.scores[round] = { score: parseInt(score) }
       player.score = player.scores.reduce((a, i) => a + i.score, 0)
       console.log('updated', prev)
+      setStorage([...prev])
       return [...prev]
     })
   }
@@ -61,6 +69,31 @@ export function Home() {
 
   console.log({ lowScore, highScore })
 
+  const reset = () => {
+    setStorage([])
+    setPlayers([])
+  }
+
+  const clearScores = () => {
+    setPlayers(prev => {
+      const newGame = prev.map(player => {
+        return { ...player, scores: [], score: 0 }
+      })
+      setStorage(newGame)
+      return newGame
+    })
+  }
+
+  const deletePlayer = index => {
+    setPlayers(prev => {
+      const newGame = prev.filter((_, i) => {
+        return i !== index
+      })
+      setStorage(newGame)
+      return newGame
+    })
+  }
+
   return (
     <main>
       <header>
@@ -83,6 +116,12 @@ export function Home() {
             value={rounds}
           />
         </section>
+        <section>
+          <button onClick={reset}>new game</button>
+        </section>
+        <section>
+          <button onClick={clearScores}>clear scores</button>
+        </section>
       </header>
       <div style={{ width: '100vw' }}>
         <StickyTable>
@@ -104,8 +143,7 @@ export function Home() {
                     (player.score == lowScore ? 'low-score' : '')
                   }
                 >
-                  {' '}
-                  {player.score}
+                  <hr /> {player.score}
                 </div>
               </Cell>
               {[...new Array(rounds + 1)].map((_, i) => {
@@ -140,6 +178,9 @@ export function Home() {
                   </Cell>
                 )
               })}
+              <Cell className="delete-button">
+                <button onClick={() => deletePlayer(index)}>X</button>
+              </Cell>
             </Row>
           ))}
         </StickyTable>

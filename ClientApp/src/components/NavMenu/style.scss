@@ -80,6 +80,9 @@ main {
   .player-score.high-score {
     background-color: orange;
   }
+  .delete-button {
+    background-color: rgba(246, 93, 93, 0.883);
+  }
 }
 
 @media (max-width: 700px) {
