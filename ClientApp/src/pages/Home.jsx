@@ -48,17 +48,21 @@ export function Home() {
   }
 
   return (
-    <div>
+    <main>
       <header>
         <section>
+          <h5>Add player </h5>
+
           <input
             type="text"
+            placeholder="Ex: Bob"
             onChange={e => setNewPlayer(e.target.value)}
             value={newPlayer}
           />
           <button onClick={() => addPlayer(newPlayer)}>add player</button>
         </section>
         <section>
+          <h5>Total rounds</h5>
           <input
             type="number"
             onChange={e => setRounds(parseInt(e.target.value))}
@@ -66,7 +70,7 @@ export function Home() {
           />
         </section>
       </header>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100vw' }}>
         <StickyTable>
           <Row>
             <Cell>Player</Cell>
@@ -117,6 +121,6 @@ export function Home() {
           ))}
         </StickyTable>
       </div>
-    </div>
+    </main>
   )
 }
