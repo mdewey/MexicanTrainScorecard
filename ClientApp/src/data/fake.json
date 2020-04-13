@@ -1,10 +1,3 @@
 {
-  "rounds": 13,
-  "players": [
-    { "score": 33, "name": "bob", "scores": [22, 33, 5, 66] },
-    { "score": 33, "name": "Becky", "scores": [22, 33, 5, 66] },
-    { "score": 33, "name": "Alyssa", "scores": [22, 33, 5, 66] },
-    { "score": 33, "name": "Clay", "scores": [22, 33, 5, 66] },
-    { "score": 33, "name": "Lynn", "scores": [22, 33, 5, 66] }
-  ]
+  "rounds": 13
 }
