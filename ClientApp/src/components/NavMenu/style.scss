@@ -1,4 +1,6 @@
-﻿a.navbar-brand {
+﻿@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+
+a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
@@ -17,11 +19,24 @@ html {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
+.header-font {
+  font-family: 'Roboto', sans-serif;
+}
+
+.normal-font {
+  font-family: 'Open Sans', sans-serif;
+}
+
 main {
+  @extend .normal-font;
+  font-size: 2rem;
   header {
     display: flex;
     justify-content: space-around;
     padding-bottom: 1rem;
+    button {
+      text-transform: uppercase;
+    }
   }
   .sticky-table-table {
     width: 100vw;
@@ -33,6 +48,8 @@ main {
     border: 3px solid whitesmoke;
   }
   .sticky-table-row:first-of-type .sticky-table-cell {
+    @extend .header-font;
+    font-size: 1.25rem;
     height: 2rem;
   }
   .sticky-table-cell {
@@ -42,7 +59,21 @@ main {
     background-color: rgb(252, 255, 97);
     color: rgb(8, 8, 8);
     padding: 1rem;
-    min-width: 20vw;
+    min-width: 33vw;
     height: 5rem;
+  }
+  .player-header {
+    text-transform: uppercase;
+  }
+}
+
+@media (max-width: 700px) {
+  * {
+    border: 1px solid pink;
+  }
+  main {
+    header {
+      flex-direction: column-reverse;
+    }
   }
 }

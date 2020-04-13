@@ -59,7 +59,7 @@ export function Home() {
             onChange={e => setNewPlayer(e.target.value)}
             value={newPlayer}
           />
-          <button onClick={() => addPlayer(newPlayer)}>add player</button>
+          <button onClick={() => addPlayer(newPlayer)}>add</button>
         </section>
         <section>
           <h5>Total rounds</h5>
@@ -73,7 +73,7 @@ export function Home() {
       <div style={{ width: '100vw' }}>
         <StickyTable>
           <Row>
-            <Cell>Player</Cell>
+            <Cell className="player-header">Player</Cell>
             {rounds &&
               [...new Array(rounds + 1)].map((_, i) => {
                 return <Cell key={i}>{rounds - i}</Cell>

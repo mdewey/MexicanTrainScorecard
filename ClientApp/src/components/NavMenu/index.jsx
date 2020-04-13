@@ -37,9 +37,7 @@ export class NavMenu extends Component {
           light
         >
           <Container>
-            <NavbarBrand tag={Link} to="/">
-              Mexican Train Scorecard
-            </NavbarBrand>
+            <NavbarBrand>Put them trains up!</NavbarBrand>
           </Container>
         </Navbar>
       </header>
